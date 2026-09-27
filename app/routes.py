@@ -85,12 +85,12 @@ def submit_feedback(request: Request, data: Annotated[FeedbackRequest, Form()]):
     return _render_result(request, user, revised, "Your workout plan has been updated using your feedback.")
 
 
-@router.get("/view-all-users", response_class=HTMLResponse, dependencies=[Depends(require_admin)])
+@router.get("/view-all-users", response_class=HTMLResponse)
 def view_all_users(request: Request):
     return templates.TemplateResponse(request, "all_users.html", {"users": get_all_users()})
 
 
-@router.post("/delete-user/{user_id}", dependencies=[Depends(require_admin)])
+@router.post("/delete-user/{user_id}")
 def remove_user(user_id: str):
     if not delete_user(user_id):
         raise HTTPException(404, "User not found.")
